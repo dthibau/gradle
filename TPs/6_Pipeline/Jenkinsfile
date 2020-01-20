@@ -1,0 +1,71 @@
+pipeline {
+  agent any
+
+  stages {
+    stage('Build') {
+      steps {  
+        // Executing 
+	echo 'Building..'
+	sh './gradlew clean test bootJar'
+    dir('build/libs/') {
+        stash includes: '*.jar', name: 'appli'
+    }
+     
+     }
+     post { 
+        always { 
+            junit '**/target/surefire-reports/*.xml'
+        }
+	success {
+	    archiveArtifacts 'build/libs/*.jar'
+	}
+    }
+   }
+stage('Parallel Stage') {
+  parallel {
+    stage('Intégration test') {
+      agent any
+       steps {  
+           echo "Integration test"
+          sh './gradlew clean integrationTest'
+        }
+    }
+    stage('Quality analysis') {
+      agent any
+      steps {  
+          echo "Quality analysis" 
+           sh './gradlew clean jacocoTestReport sonarqube'
+      }
+    }
+  }
+}
+
+stage('Deploiement Recette') {
+    when { not { branch 'master' } } 
+    steps {echo 'Deploying..'
+      unstash 'appli'
+      sh 'cp *.jar /home/dthibau/Formations/Jenkins/MyWork/Serveur/' 
+      
+      }
+    }
+
+  stage('Deploiement Production') {
+    when { 
+        branch 'master' 
+        beforeInput true
+    } 
+    input {
+        message 'Vers quel data center, voulez vous déployer ?'
+        ok 'Deploy !'
+        parameters {
+            choice choices: ['Lille', 'Dublin', 'Budapest'], description: 'Data Center', name: 'dataCenter'
+        }
+    }
+    steps {echo 'Deploying.. ${params.dataCenter}'
+      unstash 'appli'
+      sh 'cp *.jar /home/dthibau/Formations/Jenkins/MyWork/Serveur/${params.dataCenter}.war' 
+      
+      }
+    }
+  }
+}

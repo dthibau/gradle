@@ -6,16 +6,13 @@ import java.util.Arrays;
 
 import org.formation.model.Document;
 import org.formation.model.Member;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.context.ApplicationContext;
-import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
 @JsonTest
 public class MemberTest {
 
@@ -28,7 +25,7 @@ public class MemberTest {
 	Member aMember;
 	
 
-	@Before
+	@BeforeEach
 	public void setUp() {
         String[] beanNames = context.getBeanDefinitionNames();
         Arrays.sort(beanNames);

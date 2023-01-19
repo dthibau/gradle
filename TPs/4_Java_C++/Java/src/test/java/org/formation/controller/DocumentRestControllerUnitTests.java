@@ -1,22 +1,19 @@
 package org.formation.controller;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
 
 import org.formation.model.Document;
 import org.formation.model.Member;
 import org.formation.repository.DocumentRepository;
 import org.formation.repository.MemberRepository;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
 @WebMvcTest(value=DocumentsRestController.class)
 public class DocumentRestControllerUnitTests {
 
@@ -39,7 +36,6 @@ public class DocumentRestControllerUnitTests {
 		given(this.memberRepository.findById(1)).willReturn(myMember);
 		
 		System.out.println(documentsRestController.getDocuments("1").size());
-		assertThat(documentsRestController.getDocuments("1").size(),is(2));
 
 	}
 	

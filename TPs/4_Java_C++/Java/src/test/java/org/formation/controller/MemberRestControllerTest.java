@@ -7,23 +7,21 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.Arrays;
 
+import org.aspectj.lang.annotation.Before;
 import org.formation.model.Member;
 import org.formation.repository.MemberRepository;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 
 
-@RunWith(SpringRunner.class)
 @WebMvcTest(value=MembersRestController.class)
 public class MemberRestControllerTest {
 
@@ -38,7 +36,7 @@ public class MemberRestControllerTest {
 
 	Member aMember;
 
-	@Before
+	@BeforeEach
 	public void setUp() {
 		aMember = new Member();
 		aMember.setId(1);

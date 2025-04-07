@@ -1,0 +1,11 @@
+Commande	Description courte
+gradle tasks	Liste les tâches disponibles
+gradle properties	Affiche les propriétés du projet
+gradle projects	Arborescence des modules
+gradle dependencies	Arbre des dépendances
+gradle dependencyInsight	Analyse une dépendance précise
+gradle buildEnvironment	Version de Gradle, plugins, etc.
+gradle --scan	Analyse complète du build
+gradle help	Aide sur les commandes
+gradle <tâche> --dry-run	Simule l’exécution
+gradle components	Montre les outputs publiables
